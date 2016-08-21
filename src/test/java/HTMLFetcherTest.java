@@ -10,11 +10,7 @@ public class HTMLFetcherTest {
 
     @Test
     public void retrieveGoogleHTML(){
-        try {
             Document google = HTMLFetcher.fetch("https://www.google.com");
             assertEquals("Google", google.title());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

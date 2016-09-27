@@ -1,6 +1,7 @@
 import org.jsoup.nodes.Document;
 import org.junit.Test;
-import java.io.IOException;
+import utils.HTMLFetcher;
+
 import static junit.framework.TestCase.assertEquals;
 
 /**

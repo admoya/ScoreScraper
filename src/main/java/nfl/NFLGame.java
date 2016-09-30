@@ -1,54 +1,51 @@
 package nfl;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Created by Adrian on 8/20/2016.
  */
 public class NFLGame {
-    private int awayTeam;
-    private int homeTeam;
-    private int season;
+    private int awayTeamCode;
+    private int homeTeamCode;
+    private int seasonId;
     private LocalDateTime startTime;
     private String status;
     private int awayScore;
     private int homeScore;
-    private String quarter;
 
-    public NFLGame(int awayTeam, int homeTeam, int season, LocalDateTime startTime, String status, int awayScore, int homeScore, String quarter) {
-        this.awayTeam = awayTeam;
-        this.homeTeam = homeTeam;
-        this.season = season;
+    public NFLGame(int awayTeamCode, int homeTeamCode, int seasonId, LocalDateTime startTime, String status, int awayScore, int homeScore) {
+        this.awayTeamCode = awayTeamCode;
+        this.homeTeamCode = homeTeamCode;
+        this.seasonId = seasonId;
         this.startTime = startTime;
         this.status = status;
         this.awayScore = awayScore;
         this.homeScore = homeScore;
-        this.quarter = quarter;
     }
 
-    public int getAwayTeam() {
-        return awayTeam;
+    public int getAwayTeamCode() {
+        return awayTeamCode;
     }
 
-    public void setAwayTeam(int awayTeam) {
-        this.awayTeam = awayTeam;
+    public void setAwayTeamCode(int awayTeamCode) {
+        this.awayTeamCode = awayTeamCode;
     }
 
-    public int getHomeTeam() {
-        return homeTeam;
+    public int getHomeTeamCode() {
+        return homeTeamCode;
     }
 
-    public void setHomeTeam(int homeTeam) {
-        this.homeTeam = homeTeam;
+    public void setHomeTeamCode(int homeTeamCode) {
+        this.homeTeamCode = homeTeamCode;
     }
 
-    public int getSeason() {
-        return season;
+    public int getSeasonId() {
+        return seasonId;
     }
 
-    public void setSeason(int season) {
-        this.season = season;
+    public void setSeasonId(int seasonId) {
+        this.seasonId = seasonId;
     }
 
     public LocalDateTime getStartTime() {
@@ -83,11 +80,16 @@ public class NFLGame {
         this.homeScore = homeScore;
     }
 
-    public String getQuarter() {
-        return quarter;
+    public String toString(){
+        String retVal = "Season: " + Integer.toString(seasonId) + "\n";
+        retVal += "Away Team Code: " + Integer.toString(awayTeamCode) + "\n";
+        retVal += "Home Team Code: " + Integer.toString(homeTeamCode) + "\n";
+        retVal += "Start Time: " + startTime.toString() + "\n";
+        retVal += "Status: " + status + "\n";
+        retVal += "Away Score: " + Integer.toString(awayScore) + "\n";
+        retVal += "Home Score: " + Integer.toString(homeScore) + "\n";
+
+        return retVal;
     }
 
-    public void setQuarter(String quarter) {
-        this.quarter = quarter;
-    }
 }

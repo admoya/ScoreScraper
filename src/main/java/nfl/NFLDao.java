@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 
 /**
@@ -46,5 +47,34 @@ public class NFLDao {
         stmt.close();
         conn.close();
         return teams;
+    }
+
+    public void insertGame(NFLGame game) throws SQLException {
+        Connection conn = ds.getConnection();
+        Statement stmt = conn.createStatement();
+
+        String sql = "INSERT INTO GAMES VALUES(";
+        sql += Integer.toString(game.getSeasonId()) + ",";
+        sql += Integer.toString(game.getAwayTeamCode()) + ",";
+        sql += Integer.toString(game.getHomeTeamCode()) + ",";
+        sql += "FROM_UNIXTIME(" + game.getStartTime().toEpochSecond(ZoneOffset.ofHours(-4)) + "),";
+        sql += "'" + game.getStatus() + "',";
+        sql += Integer.toString(game.getAwayScore()) + ",";
+        sql += Integer.toString(game.getAwayScore()) + ")";
+        stmt.execute(sql);
+        stmt.close();
+        conn.close();
+
+        System.out.println(sql);
+    }
+
+    public void clearGames() throws SQLException{
+        Connection conn = ds.getConnection();
+        Statement stmt = conn.createStatement();
+
+        stmt.execute("TRUNCATE TABLE GAMES");
+
+        stmt.close();
+        conn.close();
     }
 }

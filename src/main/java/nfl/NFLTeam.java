@@ -1,5 +1,7 @@
 package nfl;
 
+import java.util.ArrayList;
+
 /**
  * Created by Adrian on 9/26/2016.
  */
@@ -9,7 +11,6 @@ public class NFLTeam {
     private String nickname;
     private String conference;
     private String division;
-    private String cityAndName;
 
     public NFLTeam(int teamId, String city, String nickname, String conference, String division) {
         this.teamId = teamId;
@@ -17,7 +18,6 @@ public class NFLTeam {
         this.nickname = nickname;
         this.conference = conference;
         this.division = division;
-        this.cityAndName = city + " " + nickname;
     }
 
     public int getTeamId() {
@@ -60,11 +60,45 @@ public class NFLTeam {
         this.division = division;
     }
 
-    public String getCityAndName() {
-        return cityAndName;
+    public static int getTeamCode (ArrayList<NFLTeam> teams, String nickname){
+        int retval = -1;
+        //System.out.println("----" + cityAndName);
+        switch(nickname){
+//            case "St. Louis Rams":
+//                nickname = "Los Angeles Rams";
+//                break;
+            case "Bucs":
+                nickname = "Buccaneers";
+                break;
+
+        }
+        for (NFLTeam team : teams){
+            //System.out.println("----------" +team.getCityAndName() + " " + team.getTeamId());
+            if (nickname.equals(team.getNickname())) {
+//                System.out.println(cityAndName + " matched " + team.getCityAndName());
+                retval = team.getTeamId();
+//                System.out.println("--Returning: " + retval);
+                return retval;
+            }
+        }
+        System.out.println(nickname + " DID NOT MATCH");
+        return retval;
     }
 
-    public void setCityAndName(String cityAndName) {
-        this.cityAndName = cityAndName;
+
+    public static NFLTeam getTeam(ArrayList<NFLTeam> teams, int code){
+        for (NFLTeam team : teams){
+            if (code == team.getTeamId())
+                return team;
+        }
+        return null;
+    }
+
+    public static String getTeamNickname(ArrayList<NFLTeam> teams, int code){
+        for (NFLTeam team : teams){
+            if (code == team.getTeamId())
+                return team.getNickname();
+        }
+        return null;
     }
 }

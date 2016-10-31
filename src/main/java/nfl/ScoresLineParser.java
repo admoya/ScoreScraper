@@ -1,6 +1,8 @@
 package nfl;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import utils.HTMLFetcher;
 
 import java.util.ArrayList;
@@ -22,7 +24,60 @@ public class ScoresLineParser {
         Document NFLData = HTMLFetcher.fetch(url);
         int seasonId = NFLSeason.getCurrentSeasonId();
 
-        
+        for (Element row : NFLData.getElementsByTag("tr")){
+            /*
+            TODO: Differentiate between the three table types (In progress, Final, Scheduled Today) and treat them all differently
+            In-progress will have 8 columns
+            3rd column for scheduled games will have the title "Starts At"
+             */
+            Elements cols = row.getElementsByTag("td");
+
+            //Row is a game in progress
+            if (cols.size() == 8 && cols.get(1).text().equals("NFL")){
+                String awayTeamCity = cols.get(3).getElementsByTag("a").text();
+                String homeTeamCity = cols.get(5).getElementsByTag("a").text();
+
+                String awayTeamNickname = translateCityToNickname(awayTeamCity);
+                String homeTeamNickname = translateCityToNickname(homeTeamCity);
+
+                int awayScore = Integer.parseInt(cols.get(4).text());
+                int homeScore = Integer.parseInt(cols.get(6).text());
+
+                System.out.println("Away Team: " + awayTeamNickname + " - " + awayScore);
+                System.out.println("Home Team: " + homeTeamNickname + " - " + homeScore);
+                System.out.println("-----------");
+            }
+//            if (cols.size() > 1){
+//                int colOffset = 0;
+//                if (cols.get(1).text().equals("NFL"))
+//                    colOffset = 1;
+//                if (cols.get(0+colOffset).text().equals("NFL")){
+//                    String awayTeamCity = cols.get(2+colOffset).getElementsByTag("a").text();
+//                    String homeTeamCity = cols.get(4+colOffset).getElementsByTag("a").text();
+//
+//                    String awayTeamNickname = translateCityToNickname(awayTeamCity);
+//                    String homeTeamNickname = translateCityToNickname(homeTeamCity);
+//
+//                    int awayScore = Integer.parseInt(cols.get(3+colOffset).text());
+//                    int homeScore = Integer.parseInt(cols.get(5+colOffset).text());
+//
+//                    String status = "";
+//                    if (colOffset == 1){
+//                        status = "In Progress";
+//                    }
+//                    else if (cols.get(6).getElementsByTag("a").get(0).text().equals("Final")){
+//                        status = "Final";
+//                    }
+//                    else {
+//                        status = cols.get(2).text();
+//                    }
+//                    System.out.println("Status: " + status);
+//                    System.out.println("Away Team: " + translateCityToNickname(awayTeamCity) + " " + awayScore);
+//                    System.out.println("Home Team: " + translateCityToNickname(homeTeamCity) + " " + homeScore);
+//                    System.out.println("-----");
+//                }
+//            }
+        }
         return games;
     }
 

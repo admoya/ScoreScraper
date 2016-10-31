@@ -23,10 +23,10 @@ import java.util.Date;
 public class App {
     public static void main(String[] args) throws SQLException {
 
-        Document doc = HTMLFetcher.fetch("http://www.scoresline.com/scores.asp?F=NFL");
-        System.out.println(doc.toString());
-//        NFLDao dao = new NFLDao("localHost", 3306, "nfl", "root", "gerby1");
-//        ArrayList<NFLTeam> teams = dao.getTeams();
+        NFLDao dao = new NFLDao("localHost", 3306, "nfl", "root", "gerby1");
+        ArrayList<NFLTeam> teams = dao.getTeams();
+        ScoresLineParser slp = new ScoresLineParser(teams);
+        slp.getGames();
 //        NFLSeason thisSeason = new NFLSeason(NFLSeason.getCurrentSeasonId(), NFLSeason.getCurrentYear());
 //        NFLParser np = new NFLParser(teams);
 //        ArrayList<NFLGame> games = np.getGames();
